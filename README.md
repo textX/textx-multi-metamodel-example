@@ -30,7 +30,6 @@ The **Flow DSL** defines algorithms with inputs/outputs
 based on the "Data DSL". It also allows to connect 
 algorithms (matching structure types are checked).
 
-
 An example model file "types.type":
 
     type int
