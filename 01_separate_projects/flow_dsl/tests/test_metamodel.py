@@ -26,6 +26,7 @@ def test_flow_dsl_validation():
                                          'models',
                                          'data_flow_with_error.flow'))
 
+
 def test_flow_dsl_types_validation():
     import flow_dsl
     mmF = flow_dsl.get_metamodel_flow()

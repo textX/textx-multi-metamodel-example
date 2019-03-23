@@ -9,8 +9,8 @@ def test_json_ref_dsl():
     mm = json_ref_dsl.get_metamodel()
     current_dir = os.path.dirname(__file__)
     my_model = mm.model_from_file(os.path.join(current_dir,
-                                             'models',
-                                             'ok.jref'))
+                                               'models',
+                                               'ok.jref'))
 
     # check that the references are OK
     A1_name = get_unique_named_object(my_model, "A1").pyattr

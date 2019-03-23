@@ -16,7 +16,8 @@ setup(name='types_data_flow_dsls',
       keywords="parser meta-language meta-model language DSL",
       entry_points={
           'console_scripts': [
-              'types_data_flow_dsls_validate=types_data_flow_dsls.console:validate',
+              'types_data_flow_dsls_validate=\
+                       types_data_flow_dsls.console:validate',
           ]
       },
       )

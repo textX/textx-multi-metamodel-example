@@ -119,6 +119,10 @@ To install the metamodels and run the tests (on unix-like system), you can do th
 	pip install 02_shared_grammar/                     # build
 	pip install 03_non_textx_models/                   # build
 
+### Check style guide (for all projects)
+
+	flake8                                             # build
+
 ### Run the tests 
 
 	py.test 01_separate_projects/types_dsl/tests       # build
