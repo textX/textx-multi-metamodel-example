@@ -9,15 +9,15 @@ setup(name='flow_codegen',
       license='TODO',
       packages=find_packages(),
       package_data={'': ['*.tx']},
-      install_requires=["textx", "arpeggio", "types_dsl",
+      install_requires=["textx", "arpeggio", "click", "types_dsl",
                         "data_dsl", "flow_dsl"],
       tests_require=[
           'pytest',
       ],
       keywords="parser meta-language meta-model language DSL",
       entry_points={
-          'console_scripts': [
-              'flow_dsl_codegen=flow_codegen.console:codegen',
+          'types_data_flow_dslc_commands': [
+              'flow_dsl_codegen=flow_codegen.console:codegen_flow_pu',
           ]
       },
       )

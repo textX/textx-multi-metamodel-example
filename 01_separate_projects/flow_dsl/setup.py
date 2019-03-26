@@ -9,13 +9,13 @@ setup(name='flow_dsl',
       license='TODO',
       packages=find_packages(),
       package_data={'': ['*.tx']},
-      install_requires=["textx", "arpeggio", "types_dsl", "data_dsl"],
+      install_requires=["textx", "arpeggio", "click", "types_dsl", "data_dsl"],
       tests_require=[
           'pytest',
       ],
       keywords="parser meta-language meta-model language DSL",
       entry_points={
-          'console_scripts': [
+          'types_data_flow_dslc_commands': [
               'flow_dsl_validate=flow_dsl.console:validate',
           ]
       },

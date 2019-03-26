@@ -51,6 +51,13 @@ An example model file "data_flow.flow":
     algo A2 : City -> Population
     connect A1 -> A2
 
+#### Note on the CLI for the three metamodels
+
+The types_dsl installs a command line interface. All other projects
+register to that command (like you can register to textx commands).
+However, here, you have an own DSL compiler (```types_data_flow_dslc```,
+see below).
+
 #### Challenges for an Editor
 
  * A simple metamodel ```types_dsl``` (including validation) is defined 
@@ -137,33 +144,64 @@ Here, you can validate the model used by the tests files interactively.
 
 #### flow_dsl, data_dsl, types_dsl
 
-Here, we have three separate validators, one for each DSL (one is used here).
+Here, we have one ```validate``` command installed by the types_dsl (```types_data_flow_dslc```,
+the DSL-compiler). The other DSLs override the validate command to add their own
+metamodel. The code generator adds a new command (```codegen_flow_pu```)
 
-	cd 01_separate_projects/flow_dsl/tests/models/
-	flow_dsl_validate *.flow
+#### types_dsl (alone)
 
-Expected outcome
+	cd 01_separate_projects/types_dsl
+	virtualenv venv -p $(which python3)
+	source ./venv/bin/activate
+	pip install -r requirements_dev.txt
+	pip install -e .	
 
-	validating data_flow.flow
-	validating data_flow_including_error.flow
-	  WARNING/ERROR: /home/pierre/checkouts/textX-LS/examples/02_shared_grammar/tests/models/types_with_error.type:1:1: error: types must be lowercase
-	validating data_flow_with_error.flow
-	  WARNING/ERROR: data_flow_with_error.flow:5:1: error: algo data types must match
+Then run the command ```types_data_flow_dslc --help```:
+        
+    Usage: types_data_flow_dslc [OPTIONS] COMMAND [ARGS]...
+    
+    Options:
+      --help  Show this message and exit.
+    
+    Commands:
+      validate  This command validates *.type-files.
 
-#### flow_dsl code generator
+...and validate model files:
 
-	cd 01_separate_projects/flow_codegen/tests/models/
-	flow_dsl_codegen data_flow.flow
-	plantuml data_flow.flow.pu # optional
+    types_data_flow_dslc validate tests/models/*
 
-Expected outcome
 
-	validating data_flow.flow
-	validating data_flow_including_error.flow
-	  WARNING/ERROR: /home/pierre/checkouts/textX-LS/examples/02_shared_grammar/tests/models/types_with_error.type:1:1: error: types must be lowercase
-	validating data_flow_with_error.flow
-	  WARNING/ERROR: data_flow_with_error.flow:5:1: error: algo data types must match
-	
+#### flow_codegen, flow_dsl, data_dsl and types_dsl (all together)
+
+	cd 01_separate_projects/flow_codegen
+	virtualenv venv -p $(which python3)
+	source ./venv/bin/activate
+	pip install -r requirements_dev.txt
+	pip install -e ../types_dsl
+	pip install -e ../data_dsl
+	pip install -e ../flow_dsl
+	pip install -e .
+
+Then run the command ```types_data_flow_dslc --help```:
+        
+    Usage: types_data_flow_dslc [OPTIONS] COMMAND [ARGS]...
+    
+    Options:
+      --help  Show this message and exit.
+    
+    Commands:
+      codegen-flow-pu  This command transforms *.flow-files to *.pu files...
+      validate         This command validates *.flow, *.data or *.type-files.
+
+...and validate model files:
+
+    types_data_flow_dslc validate tests/models/*
+
+... or generate some code (note: ```tests/models/data_flow.flow.pu``` is generated)
+
+    types_data_flow_dslc codegen-flow-pu  tests/models/data_flow.flow
+
+
 #### types_data_flow_dsls
 
 Here, we have one validator for all DSLs (metamodel selected by filename suffix).

@@ -1,18 +1,23 @@
-import argparse
-from flow_dsl import get_metamodel_flow
+from textx.scoping import MetaModelProvider
+import click
+import flow_dsl
 
 
-def validate():
-    mm = get_metamodel_flow()
-    parser = argparse.ArgumentParser(description='validate data_dsl files.')
-    parser.add_argument('model_files', metavar='model_files', type=str,
-                        nargs='+',
-                        help='model filenames')
-    args = parser.parse_args()
+##############################################
+#  overrides validate command from types_dsl
+##############################################
 
-    for filename in args.model_files:
+
+@click.argument('model_files', nargs=-1)
+def validate(model_files):
+    """
+    This command validates *.flow, *.data or *.type-files.
+    """
+    flow_dsl.get_metamodel_flow()  # activate/register meta model
+    for filename in model_files:
         try:
-            print('validating {}'.format(filename))
+            print('validating flow/types/data dsl {}'.format(filename))
+            mm = MetaModelProvider.get_metamodel(None, filename)
             mm.model_from_file(filename)
         except BaseException as e:
             print('  WARNING/ERROR: {}'.format(e))
