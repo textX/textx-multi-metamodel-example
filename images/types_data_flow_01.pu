@@ -7,7 +7,7 @@ component types_dsl <<project>> {
 note as TypesNote
 **API**: get_metamodel_types()
 **Responsibility**: parse and validate
-**Executable**: types_dsl_validate
+**Executable**: types_data_flow_dslc
 end note
 
 component data_dsl <<project>> {
@@ -17,7 +17,7 @@ component data_dsl <<project>> {
 note as DataNote
 **API**: get_metamodel_data()
 **Responsibility**: parse
-**Executable**: data_dsl_validate
+**Executable**: (registered to types_data_flow_dslc)
 end note
 
 component flow_dsl <<project>> {
@@ -27,16 +27,16 @@ component flow_dsl <<project>> {
 note as FlowNote
 **API**: get_metamodel_flow()
 **Responsibility**: parse and validate
-**Executable**: flow_dsl_validate
+**Executable**: (registered to types_data_flow_dslc)
 end note
 
 component flow_codegen <<project>> {
 	component FlowCodeGen <<tool>> as FlowCodeGen
 }
 note as FlowCodeGenNote
-**API**: codegen()
+**API**: codegen_flow_pu()
 **Responsibility**: generate code
-**Executable**: flow_dsl_codegen
+**Executable**: (registered to types_data_flow_dslc)
 end note
 
 
