@@ -2,6 +2,7 @@ from textx import metamodel_from_file
 import textx.scoping
 import textx.scoping.tools as tools
 import os
+from textx_ls_core.languages import LanguageTemplate
 
 _mm_types = None
 
@@ -30,6 +31,22 @@ def _library_init():
     _mm_types.register_obj_processors({
         'Type': check_type
     })
+
+
+class TypesDslLang(LanguageTemplate):
+
+    def __init__(self):
+        super(TypesDslLang, self).__init__(auto_load_mm=False)
+
+        self._metamodel = get_metamodel_types()
+
+    @property
+    def extensions(self):
+        return ['type']
+
+    @property
+    def language_name(self):
+        return 'types_dsl'
 
 
 _library_init()
