@@ -1,6 +1,6 @@
 # Example types_dsl
 
-In a virtualenv, install the package
+In a virtualenv, install the package 
 
 	virtualenv venv -p $(which python3)
 	source ./venv/bin/activate
