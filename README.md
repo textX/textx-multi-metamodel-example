@@ -82,7 +82,7 @@ grammars (including each other).
 
  * Multiple files are included (allow to navigate across files;
    shared grammars).
- * Multiple meta models ar used
+ * Multiple meta models are used
  * Model validation for *.flow and *.types is defined.
 
 
@@ -97,7 +97,7 @@ A textX model references a JSON object.
  * Non-textX files are included (JSON file).
  * Non-textX elements from the JSON file (textX type "OBJECT") are referenced from the textX grammar using
    a custom scope provider.
- * Model validation is defined.
+ * Model validation is defined (in terms of a scoping validation; no special validation rules were added so far).
 
 
 ## Installation and usage of the DSLs
