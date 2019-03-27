@@ -75,7 +75,6 @@ see below).
 grammars (including each other).
 
  * The same semantics as in the previous section are defined.
- * A code generator is defined.
 
 ![images/types_data_flow_02.pu](images/types_data_flow_02.png)
 
