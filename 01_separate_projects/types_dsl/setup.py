@@ -9,7 +9,8 @@ setup(name='types_dsl',
       license='TODO',
       packages=find_packages(),
       package_data={'': ['*.tx']},
-      install_requires=["textx", "arpeggio", "click"],
+      install_requires=["textx", "arpeggio", "click",
+                        "textx_ls_core"],
       tests_require=[
           'pytest',
       ],
@@ -17,6 +18,9 @@ setup(name='types_dsl',
       entry_points={
           'console_scripts': [
               'types_data_flow_dslc=types_dsl.console:types_data_flow_dslc',
+          ],
+          'textxls_langs': [
+              'types_dsl = types_dsl:TypesDslLang'
           ]
       },
       )

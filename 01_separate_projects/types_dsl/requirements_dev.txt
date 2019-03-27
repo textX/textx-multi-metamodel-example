@@ -1,3 +1,4 @@
 pytest
 flake8
 click
+git+https://github.com/textX/textX-LS.git@danixeee/language-installation-mechanism#subdirectory=textX-LS/core
