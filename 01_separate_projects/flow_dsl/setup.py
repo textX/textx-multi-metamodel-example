@@ -17,6 +17,7 @@ setup(name='flow_dsl',
       entry_points={
           'types_data_flow_dslc_commands': [
               'flow_dsl_validate=flow_dsl.console:validate',
+              'flow_dsl_inspect=flow_dsl.console:inspect',
           ]
       },
       )

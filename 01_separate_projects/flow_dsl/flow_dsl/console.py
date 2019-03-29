@@ -10,7 +10,7 @@ import textx_inspector
 @click.argument('model_files', nargs=-1)
 def inspect(model_files):
     """
-    This command validates *.flow, *.data or *.type-files.
+    This command inspects *.flow, *.data or *.type-files.
     """
     flow_dsl.get_metamodel_flow()  # activate/register meta model
     root = None
