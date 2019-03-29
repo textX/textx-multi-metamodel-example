@@ -7,6 +7,7 @@ import textx_inspector
 #  overrides validate command from types_dsl
 ##############################################
 
+
 @click.argument('model_files', nargs=-1)
 def inspect(model_files):
     """

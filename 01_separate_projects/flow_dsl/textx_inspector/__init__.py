@@ -1,9 +1,7 @@
-#from Tkinter import *
-from tkinter import *
+from tkinter import Tk
 import tkinter.ttk as ttk
-from textx.const import MULT_OPTIONAL, MULT_ONE, MULT_ONEORMORE, \
-    MULT_ZEROORMORE, RULE_ABSTRACT, RULE_MATCH, MULT_ASSIGN_ERROR, \
-    UNKNOWN_OBJ_ERROR
+from textx.const import MULT_OPTIONAL, MULT_ONE
+
 
 def inspect(model, root=None, run_mainloop=True):
 
@@ -14,44 +12,46 @@ def inspect(model, root=None, run_mainloop=True):
 
     tree = ttk.Treeview(root)
 
-    tree["columns"]=("type","attr_type")
-    tree.column("type", width=100 )
-    tree.column("attr_type", width=100)
+    tree["columns"] = ("type", "attr")
+    tree.column("type", width=200)
+    tree.column("attr", width=200)
     tree.heading("type", text="type")
-    tree.heading("attr_type", text="attr type")
+    tree.heading("attr", text="attr")
 
-    #tree.insert("" , 0,    text="Line 1", values=("1A","1b"))
-
-    #id2 = tree.insert("", 1, "dir2", text="Dir 2")
-    #tree.insert(id2, "end", "dir 2", text="sub dir 2", values=("2A","2B"))
-
-    ##alternatively:
-    #tree.insert("", 3, "dir3", text="Dir 3")
-    #tree.insert("dir3", 3, text=" sub dir 3",values=("3A"," 3B"))
-
-    def follow(elem, id="", is_link=False):
+    def follow(elem, id="", is_link=False, attr_name=""):
         cls = elem.__class__
         if hasattr(cls, '_tx_attrs'):
             name = "<unnamed>"
-            if hasattr(elem,'name'):
+            if hasattr(elem, 'name'):
                 name = elem.name
+            if hasattr(elem, '_tx_filename'):
+                name = elem._tx_filename
 
             typename = cls.__name__
             if is_link:
                 typename = "*{}".format(typename)
-            new_id = tree.insert(id, 0, text=name, values=(typename, "todo"))
+            new_id = tree.insert(id, 0, text=name, values=(typename, attr_name))
 
             if not is_link:
                 for attr_name, attr in cls._tx_attrs.items():
                     if attr.mult in (MULT_ONE, MULT_OPTIONAL):
                         new_elem = getattr(elem, attr_name)
                         if new_elem:
-                            follow(new_elem, new_id, not attr.cont)
+                            follow(new_elem, new_id, not attr.cont, attr_name)
                     else:
                         new_elem_list = getattr(elem, attr_name)
                         if new_elem_list:
                             for new_elem in new_elem_list:
-                                follow(new_elem, new_id, not attr.cont)
+                                follow(new_elem, new_id, not attr.cont, attr_name)
+
+            # problem: circular includes.
+            # solution: open new window for new file?
+            #
+            # if hasattr(elem, '_tx_loaded_models'):
+            #    new_id2 = tree.insert(new_id, 0, text=name,
+            #                          values=("list", "included model"))
+            #    for m in elem._tx_loaded_models:
+            #        follow(m, new_id2)
 
     follow(model)
 
@@ -60,4 +60,3 @@ def inspect(model, root=None, run_mainloop=True):
         root.mainloop()
 
     return root
-
