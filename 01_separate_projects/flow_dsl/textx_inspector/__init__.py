@@ -30,19 +30,22 @@ def inspect(model, root=None, run_mainloop=True):
             typename = cls.__name__
             if is_link:
                 typename = "*{}".format(typename)
-            new_id = tree.insert(id, 0, text=name, values=(typename, attr_name))
+            new_id = tree.insert(id, 0, text=name,
+                                 values=(typename, attr_name))
 
             if not is_link:
                 for attr_name, attr in cls._tx_attrs.items():
                     if attr.mult in (MULT_ONE, MULT_OPTIONAL):
                         new_elem = getattr(elem, attr_name)
                         if new_elem:
-                            follow(new_elem, new_id, not attr.cont, attr_name)
+                            follow(new_elem, new_id, not attr.cont,
+                                   attr_name)
                     else:
                         new_elem_list = getattr(elem, attr_name)
                         if new_elem_list:
                             for new_elem in new_elem_list:
-                                follow(new_elem, new_id, not attr.cont, attr_name)
+                                follow(new_elem, new_id, not attr.cont,
+                                       attr_name)
 
             # problem: circular includes.
             # solution: open new window for new file?
