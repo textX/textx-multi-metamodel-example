@@ -1,4 +1,4 @@
-#include "data_structures.data"
+#include "data_structures.edata"
 
 algo A1 : Point -> City
 algo A2 : City -> Population
