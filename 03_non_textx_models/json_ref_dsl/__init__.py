@@ -1,23 +1,14 @@
-from textx import metamodel_from_file, get_model
-import textx.scoping
 import os
-
-_mm = None
-
-
-def get_metamodel():
-    global _mm
-    return _mm
+from textx import metamodel_from_file, language, get_model
 
 
-def _library_init():
-    global _mm
+@language('json-ref-dsl', '*.jref3')
+def json_ref_dsl():
     global_repo = True
     current_dir = os.path.dirname(__file__)
 
-    _mm = metamodel_from_file(os.path.join(current_dir, 'JsonRef.tx'),
-                              global_repository=global_repo)
-    textx.scoping.MetaModelProvider.add_metamodel("*.jref", _mm)
+    mm = metamodel_from_file(os.path.join(current_dir, 'JsonRef.tx'),
+                             global_repository=global_repo)
 
     def json_scope_provider(obj, attr, attr_ref):
         if not obj.pyobj:
@@ -34,8 +25,6 @@ def _library_init():
         else:
             raise Exception("{} not found".format(attr_ref.obj_name))
 
-    _mm.register_scope_providers(
+    mm.register_scope_providers(
         {"Access.pyattr": json_scope_provider})
-
-
-_library_init()
+    return mm

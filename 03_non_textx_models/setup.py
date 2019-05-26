@@ -15,8 +15,8 @@ setup(name='json_ref_dsl',
       ],
       keywords="parser meta-language meta-model language DSL",
       entry_points={
-          'console_scripts': [
-              'json_ref_dsl_validate=json_ref_dsl.console:validate',
-          ]
+        'textx_languages': [
+            'json_ref_dsl_3 = json_ref_dsl:json_ref_dsl',
+          ],
       },
       )
