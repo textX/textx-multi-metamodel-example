@@ -1,60 +1,66 @@
 from __future__ import unicode_literals
-from pytest import raises
 import os
-import textx.exceptions
+import pytest
+from pytest import raises
+from textx import (TextXSemanticError, TextXSyntaxError,
+                   metamodel_for_language,
+                   clear_language_registrations)
 
 
-def test_types_dsl():
-    import types_data_flow_dsls
-    mmT = types_data_flow_dsls.get_metamodel_types()
+current_dir = os.path.dirname(__file__)
+
+
+@pytest.fixture(scope='module')
+def clear_all():
+    clear_language_registrations()
+
+
+def test_types_dsl(clear_all):
+    mmT = metamodel_for_language('types-dsl-s')
     current_dir = os.path.dirname(__file__)
     model = mmT.model_from_file(os.path.join(current_dir,
                                              'models',
-                                             'types.type'))
+                                             'types.etype2'))
     assert(model is not None)
     assert(len(model.types) == 2)
 
 
-def test_types_dsl_validation():
-    import types_data_flow_dsls
-    mmT = types_data_flow_dsls.get_metamodel_types()
+def test_types_dsl_validation(clear_all):
+    mmT = metamodel_for_language('types-dsl-s')
     current_dir = os.path.dirname(__file__)
-    with raises(textx.exceptions.TextXSyntaxError,
+    with raises(TextXSyntaxError,
                 match=r'.*lowercase.*'):
         mmT.model_from_file(os.path.join(current_dir,
                                          'models',
-                                         'types_with_error.type'))
+                                         'types_with_error.etype2'))
 
 
-def test_data_dsl():
-    import types_data_flow_dsls
-    mmD = types_data_flow_dsls.get_metamodel_data()
+def test_data_dsl(clear_all):
+    mmD = metamodel_for_language('data-dsl-s')
     current_dir = os.path.dirname(__file__)
     model = mmD.model_from_file(os.path.join(current_dir,
                                              'models',
-                                             'data_structures.data'))
+                                             'data_structures.edata2'))
     assert(model is not None)
     assert(len(model.data) == 3)
 
 
-def test_flow_dsl():
-    import types_data_flow_dsls
-    mmD = types_data_flow_dsls.get_metamodel_flow()
+def test_flow_dsl(clear_all):
+    mmF = metamodel_for_language('flow-dsl-s')
     current_dir = os.path.dirname(__file__)
-    model = mmD.model_from_file(os.path.join(current_dir,
+    model = mmF.model_from_file(os.path.join(current_dir,
                                              'models',
-                                             'data_flow.flow'))
+                                             'data_flow.eflow2'))
     assert(model is not None)
     assert(len(model.algos) == 2)
     assert(len(model.flows) == 1)
 
 
-def test_flow_dsl_validation():
-    import types_data_flow_dsls
-    mmF = types_data_flow_dsls.get_metamodel_flow()
+def test_flow_dsl_validation(clear_all):
+    mmF = metamodel_for_language('flow-dsl-s')
     current_dir = os.path.dirname(__file__)
-    with raises(textx.exceptions.TextXSemanticError,
+    with raises(TextXSemanticError,
                 match=r'.*algo data types must match.*'):
         mmF.model_from_file(os.path.join(current_dir,
                                          'models',
-                                         'data_flow_with_error.flow'))
+                                         'data_flow_with_error.eflow2'))
