@@ -181,24 +181,15 @@ Then run the command ```types_data_flow_dslc --help```:
 	pip install -e ../flow_dsl
 	pip install -e .
 
-Then run the command ```types_data_flow_dslc --help```:
-        
-    Usage: types_data_flow_dslc [OPTIONS] COMMAND [ARGS]...
-    
-    Options:
-      --help  Show this message and exit.
-    
-    Commands:
-      codegen-flow-pu  This command transforms *.flow-files to *.pu files...
-      validate         This command validates *.flow, *.data or *.type-files.
+Then run the textx command...
 
 ...and validate model files:
 
-    types_data_flow_dslc validate tests/models/*
+    textx check tests/models/*
 
 ... or generate some code (note: ```tests/models/data_flow.flow.pu``` is generated)
 
-    types_data_flow_dslc codegen-flow-pu  tests/models/data_flow.flow
+    textx generate --target PlantUML tests/models/data_flow.eflow1 
 
 
 #### types_data_flow_dsls
@@ -206,31 +197,24 @@ Then run the command ```types_data_flow_dslc --help```:
 Here, we have one validator for all DSLs (metamodel selected by filename suffix).
 
 	cd 02_shared_grammar/tests/models/
-	types_data_flow_dsls_validate *.*
+	find . -name "*.e*" -exec textx check {} \;
 
 Expected outcome
 
-	validating data_flow.flow
-	validating data_flow_including_error.flow
-	  WARNING/ERROR: /home/pierre/checkouts/textX-LS/examples/02_shared_grammar/tests/models/types_with_error.type:1:1: error: types must be lowercase
-	validating data_flow_with_error.flow
-	  WARNING/ERROR: data_flow_with_error.flow:5:1: error: algo data types must match
-	validating data_structures.data
-	validating data_structures_including_error.data
-	  WARNING/ERROR: /home/pierre/checkouts/textX-LS/examples/02_shared_grammar/tests/models/types_with_error.type:1:1: error: types must be lowercase
-	validating types.type
-	validating types_with_error.type
-	  WARNING/ERROR: types_with_error.type:1:1: error: types must be lowercase
+	...tests/models/types.etype2: OK.
+	...tests/models/types_with_error.etype2:1:1: error: types must be lowercase
+	...tests/models/data_structures.edata2: OK.
+	./types_with_error.etype2:1:1: error: types must be lowercase
+	./data_flow_with_error.eflow2:5:1: error: algo data types must match
+	...tests/models/data_flow.eflow2: OK.
+	...tests/models/types_with_error.etype2:1:1: error: types must be lowercase
 
 #### json_ref_dsl
 
 We can validate if all references to a json file from a textX model are ok:
 
 	cd 03_non_textx_models/tests/models
-	json_ref_dsl_validate ok.jref 
+	textx check ok.jref3 
 
-Expected output:
+Expected output: no error ("OK")
 
-	validating ok.jref
-	A1 --> pierre: ok
-	A2 --> male: ok
