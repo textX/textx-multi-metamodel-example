@@ -137,40 +137,11 @@ To install the metamodels and run the tests (on unix-like system), you can do th
 	py.test 02_shared_grammar/tests/                   # build
 	py.test 03_non_textx_models/tests                  # build
 
-### Run the executables
+### Run the textx plugins
 
 Here, you can validate the model used by the tests files interactively.
 
-#### flow_dsl, data_dsl, types_dsl
-
-Here, we have one ```validate``` command installed by the types_dsl (```types_data_flow_dslc```,
-the DSL-compiler). The other DSLs override the validate command to add their own
-metamodel. The code generator adds a new command (```codegen_flow_pu```)
-
-#### types_dsl (alone)
-
-	cd 01_separate_projects/types_dsl
-	virtualenv venv -p $(which python3)
-	source ./venv/bin/activate
-	pip install -r requirements_dev.txt
-	pip install -e .	
-
-Then run the command ```types_data_flow_dslc --help```:
-        
-    Usage: types_data_flow_dslc [OPTIONS] COMMAND [ARGS]...
-    
-    Options:
-      --help  Show this message and exit.
-    
-    Commands:
-      validate  This command validates *.type-files.
-
-...and validate model files:
-
-    types_data_flow_dslc validate tests/models/*
-
-
-#### flow_codegen, flow_dsl, data_dsl and types_dsl (all together)
+#### flow_codegen, flow_dsl, data_dsl and types_dsl
 
 	cd 01_separate_projects/flow_codegen
 	virtualenv venv -p $(which python3)
