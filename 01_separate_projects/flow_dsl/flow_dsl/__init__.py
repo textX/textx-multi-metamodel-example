@@ -4,7 +4,7 @@ import textx.scoping.tools as tools
 import textx.scoping.providers as scoping_providers
 
 
-@language('flow-dsl', '*.eflow')
+@language('flow-dsl', '*.eflow1')
 def flow_dsl():
     """
     An example DSL for data flow processing definition

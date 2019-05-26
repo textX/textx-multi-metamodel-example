@@ -3,7 +3,7 @@ from textx import metamodel_from_file, language
 import textx.scoping.providers as scoping_providers
 
 
-@language('data-dsl', '*.edata')
+@language('data-dsl', '*.edata1')
 def data_dsl():
     """
     An example DSL for data definition

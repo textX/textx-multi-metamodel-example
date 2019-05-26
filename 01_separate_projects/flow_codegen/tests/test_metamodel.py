@@ -16,7 +16,7 @@ def test_flow_dsl():
         pass
 
     model_file = os.path.join(this_folder,
-                              'models', 'data_flow.eflow')
+                              'models', 'data_flow.eflow1')
     assert os.path.exists(model_file)
 
     runner = CliRunner()

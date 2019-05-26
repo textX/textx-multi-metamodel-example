@@ -22,7 +22,7 @@ def test_flow_dsl(clear_all):
     mmF = metamodel_for_language('flow-dsl')
     model = mmF.model_from_file(os.path.join(current_dir,
                                              'models',
-                                             'data_flow.eflow'))
+                                             'data_flow.eflow1'))
     assert(model is not None)
     assert(len(model.algos) == 2)
     assert(len(model.flows) == 1)
@@ -38,7 +38,7 @@ def test_flow_dsl_validation(clear_all):
                        match=r'.*algo data types must match.*'):
         mmF.model_from_file(os.path.join(current_dir,
                                          'models',
-                                         'data_flow_with_error.eflow'))
+                                         'data_flow_with_error.eflow1'))
 
 
 def test_flow_dsl_types_validation(clear_all):
@@ -51,4 +51,4 @@ def test_flow_dsl_types_validation(clear_all):
                        match=r'.*lowercase.*'):
         mmF.model_from_file(os.path.join(current_dir,
                                          'models',
-                                         'data_flow_including_error.eflow'))
+                                         'data_flow_including_error.eflow1'))

@@ -13,6 +13,6 @@ def test_data_dsl():
     mmD = metamodel_for_language('data-dsl')
     model = mmD.model_from_file(os.path.join(current_dir,
                                              'models',
-                                             'data_structures.edata'))
+                                             'data_structures.edata1'))
     assert(model is not None)
     assert(len(model.data) == 3)

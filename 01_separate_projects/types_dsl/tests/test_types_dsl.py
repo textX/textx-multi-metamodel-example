@@ -21,7 +21,7 @@ def test_types_dsl(clear_all):
     mmT = metamodel_for_language('types-dsl')
     model = mmT.model_from_file(os.path.join(current_dir,
                                              'models',
-                                             'types.etype'))
+                                             'types.etype1'))
     assert(model is not None)
     assert(len(model.types) == 2)
 
@@ -36,4 +36,4 @@ def test_types_dsl_invalid(clear_all):
                        match=r'.*lowercase.*'):
         mmT.model_from_file(os.path.join(current_dir,
                                          'models',
-                                         'types_with_error.etype'))
+                                         'types_with_error.etype1'))

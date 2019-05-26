@@ -3,7 +3,7 @@ import textx.scoping.tools as tools
 from textx import metamodel_from_file, TextXSyntaxError, language
 
 
-@language('types-dsl', '*.etype')
+@language('types-dsl', '*.etype1')
 def types_dsl():
     """
     An example DSL for simple types definition
