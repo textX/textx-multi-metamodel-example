@@ -147,20 +147,26 @@ Here, you can validate the model used by the tests files interactively.
 
 Then run the textx command...
 
-...and validate model files:
+...and validate model files (note: validation stops after the first issue is found):
 
     textx check tests/models/*
 
 ... or generate some code (note: ```tests/models/data_flow.flow.pu``` is generated)
 
-    textx generate --target PlantUML tests/models/data_flow.eflow1 
+    textx generate --overwrite --target PlantUML tests/models/data_flow.eflow1 
 
 
 #### types_data_flow_dsls
 
-Here, we have one validator for all DSLs (metamodel selected by filename suffix).
+	cd 02_shared_grammar
+	virtualenv venv -p $(which python3)
+	source ./venv/bin/activate
+	pip install -r requirements_dev.txt
+	pip install -e .
 
-	cd 02_shared_grammar/tests/models/
+Check all files separately (do not stop after first issue is found).
+
+	cd tests/models/
 	find . -name "*.e*" -exec textx check {} \;
 
 Expected outcome
@@ -175,9 +181,15 @@ Expected outcome
 
 #### json_ref_dsl
 
+	cd 03_non_textx_models
+	virtualenv venv -p $(which python3)
+	source ./venv/bin/activate
+	pip install -r requirements_dev.txt
+	pip install -e .
+
 We can validate if all references to a json file from a textX model are ok:
 
-	cd 03_non_textx_models/tests/models
+	cd tests/models
 	textx check ok.jref3 
 
 Expected output: no error ("OK")

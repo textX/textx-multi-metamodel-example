@@ -1,5 +1,6 @@
 import os
 from textx import metamodel_from_file, language, get_model
+from textx.exceptions import TextXSemanticError
 
 
 @language('json-ref-dsl', '*.jref3')
@@ -23,7 +24,7 @@ def json_ref_dsl():
         if attr_ref.obj_name in obj.pyobj.data:
             return obj.pyobj.data[attr_ref.obj_name]
         else:
-            raise Exception("{} not found".format(attr_ref.obj_name))
+            raise TextXSemanticError("{} not found".format(attr_ref.obj_name))
 
     mm.register_scope_providers(
         {"Access.pyattr": json_scope_provider})
