@@ -31,11 +31,11 @@ note as FlowNote
 end note
 
 component flow_codegen <<project>> {
-	component FlowCodeGen <<tool>> as FlowCodeGen
+	component FlowCodeGen <<target>> as FlowCodeGen
 }
 note as FlowCodeGenNote
 **Responsibility**: generate code
-**Language**: flow_dsl_s
+**Language**: flow_dsl
 **Target**: PlantUML
 end note
 

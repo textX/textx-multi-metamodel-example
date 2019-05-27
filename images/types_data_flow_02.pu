@@ -7,6 +7,9 @@ component types_data_flow_dsls <<project>> {
 	component Types <<metamodel>> as Types
 	component Data <<metamodel>> as Data
 	component Flow <<metamodel>> as Flow
+
+	component FlowCodeGen <<target>> as FlowCodeGen
+
 }
 
 note as Note
@@ -25,6 +28,8 @@ FlowG --> "includes" DataG
 Types -> "uses" TypesG
 Data -> "uses" DataG
 Flow -> "uses" FlowG
+
+FlowCodeGen -> "uses" Flow
 
 @enduml
 
