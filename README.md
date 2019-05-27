@@ -194,3 +194,6 @@ We can validate if all references to a json file from a textX model are ok:
 
 Expected output: no error ("OK")
 
+	textx check error_noname.jref3
+
+Expected output: error, "'noname' not found".
