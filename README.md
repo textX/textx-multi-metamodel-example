@@ -1,5 +1,7 @@
 # Multi-metamodel examples (textX)
 
+![Build status](https://travis-ci.org/textX/textx-multi-metamodel-example.svg?branch=master)]
+
 ## Overview
 
 Here, we present some DSLs consisting of multiple metamodels.
