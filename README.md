@@ -51,13 +51,6 @@ An example model file "data_flow.flow":
     algo A2 : City -> Population
     connect A1 -> A2
 
-#### Note on the CLI for the three metamodels
-
-The types_dsl installs a command line interface. All other projects
-register to that command (like you can register to textx commands).
-However, here, you have an own DSL compiler (```types_data_flow_dslc```,
-see below).
-
 #### Challenges for an Editor
 
  * A simple metamodel ```types_dsl``` (including validation) is defined 

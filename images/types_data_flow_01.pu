@@ -5,9 +5,9 @@ component types_dsl <<project>> {
 	component Types.tx <<grammar>> as TypesG
 }
 note as TypesNote
-**API**: get_metamodel_types()
 **Responsibility**: parse and validate
-**Executable**: types_data_flow_dslc
+**Language**: types_dsl
+**Extension**: *.etype1
 end note
 
 component data_dsl <<project>> {
@@ -15,9 +15,9 @@ component data_dsl <<project>> {
 	component Data.tx <<grammar>> as DataG
 }
 note as DataNote
-**API**: get_metamodel_data()
 **Responsibility**: parse
-**Executable**: (registered to types_data_flow_dslc)
+**Language**: data_dsl
+**Extension**: *.edata1
 end note
 
 component flow_dsl <<project>> {
@@ -25,18 +25,18 @@ component flow_dsl <<project>> {
 	component Flow.tx <<grammar>> as FlowG
 }
 note as FlowNote
-**API**: get_metamodel_flow()
 **Responsibility**: parse and validate
-**Executable**: (registered to types_data_flow_dslc)
+**Language**: flow_dsl
+**Extension**: *.eflow1
 end note
 
 component flow_codegen <<project>> {
 	component FlowCodeGen <<tool>> as FlowCodeGen
 }
 note as FlowCodeGenNote
-**API**: codegen_flow_pu()
 **Responsibility**: generate code
-**Executable**: (registered to types_data_flow_dslc)
+**Language**: flow_dsl_s
+**Target**: PlantUML
 end note
 
 

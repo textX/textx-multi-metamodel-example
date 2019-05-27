@@ -10,14 +10,11 @@ component types_data_flow_dsls <<project>> {
 }
 
 note as Note
-**API**:
- get_metamodel_types()
- get_metamodel_data()
- get_metamodel_flow()
 **Responsibility**:
  parse and validate
-**Executable**: 
- types_data_flow_dsls_validate
+**Languages**:
+ types_dsl_s, data_dsl_s, flow_dsl_s
+**Extension**: *.etype2, *.edata2, *.eflow2
 end note
 
 types_data_flow_dsls . Note
