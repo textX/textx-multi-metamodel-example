@@ -51,13 +51,6 @@ An example model file "data_flow.flow":
     algo A2 : City -> Population
     connect A1 -> A2
 
-#### Note on the CLI for the three metamodels
-
-The types_dsl installs a command line interface. All other projects
-register to that command (like you can register to textx commands).
-However, here, you have an own DSL compiler (```types_data_flow_dslc```,
-see below).
-
 #### Challenges for an Editor
 
  * A simple metamodel ```types_dsl``` (including validation) is defined 
@@ -137,40 +130,11 @@ To install the metamodels and run the tests (on unix-like system), you can do th
 	py.test 02_shared_grammar/tests/                   # build
 	py.test 03_non_textx_models/tests                  # build
 
-### Run the executables
+### Run the textx plugins
 
 Here, you can validate the model used by the tests files interactively.
 
-#### flow_dsl, data_dsl, types_dsl
-
-Here, we have one ```validate``` command installed by the types_dsl (```types_data_flow_dslc```,
-the DSL-compiler). The other DSLs override the validate command to add their own
-metamodel. The code generator adds a new command (```codegen_flow_pu```)
-
-#### types_dsl (alone)
-
-	cd 01_separate_projects/types_dsl
-	virtualenv venv -p $(which python3)
-	source ./venv/bin/activate
-	pip install -r requirements_dev.txt
-	pip install -e .	
-
-Then run the command ```types_data_flow_dslc --help```:
-        
-    Usage: types_data_flow_dslc [OPTIONS] COMMAND [ARGS]...
-    
-    Options:
-      --help  Show this message and exit.
-    
-    Commands:
-      validate  This command validates *.type-files.
-
-...and validate model files:
-
-    types_data_flow_dslc validate tests/models/*
-
-
-#### flow_codegen, flow_dsl, data_dsl and types_dsl (all together)
+#### flow_codegen, flow_dsl, data_dsl and types_dsl
 
 	cd 01_separate_projects/flow_codegen
 	virtualenv venv -p $(which python3)
@@ -181,56 +145,55 @@ Then run the command ```types_data_flow_dslc --help```:
 	pip install -e ../flow_dsl
 	pip install -e .
 
-Then run the command ```types_data_flow_dslc --help```:
-        
-    Usage: types_data_flow_dslc [OPTIONS] COMMAND [ARGS]...
-    
-    Options:
-      --help  Show this message and exit.
-    
-    Commands:
-      codegen-flow-pu  This command transforms *.flow-files to *.pu files...
-      validate         This command validates *.flow, *.data or *.type-files.
+Then run the textx command...
 
-...and validate model files:
+...and validate model files (note: validation stops after the first issue is found):
 
-    types_data_flow_dslc validate tests/models/*
+    textx check tests/models/*
 
 ... or generate some code (note: ```tests/models/data_flow.flow.pu``` is generated)
 
-    types_data_flow_dslc codegen-flow-pu  tests/models/data_flow.flow
+    textx generate --overwrite --target PlantUML tests/models/data_flow.eflow1 
 
 
 #### types_data_flow_dsls
 
-Here, we have one validator for all DSLs (metamodel selected by filename suffix).
+	cd 02_shared_grammar
+	virtualenv venv -p $(which python3)
+	source ./venv/bin/activate
+	pip install -r requirements_dev.txt
+	pip install -e .
 
-	cd 02_shared_grammar/tests/models/
-	types_data_flow_dsls_validate *.*
+Check all files separately (do not stop after first issue is found).
+
+	cd tests/models/
+	find . -name "*.e*" -exec textx check {} \;
 
 Expected outcome
 
-	validating data_flow.flow
-	validating data_flow_including_error.flow
-	  WARNING/ERROR: /home/pierre/checkouts/textX-LS/examples/02_shared_grammar/tests/models/types_with_error.type:1:1: error: types must be lowercase
-	validating data_flow_with_error.flow
-	  WARNING/ERROR: data_flow_with_error.flow:5:1: error: algo data types must match
-	validating data_structures.data
-	validating data_structures_including_error.data
-	  WARNING/ERROR: /home/pierre/checkouts/textX-LS/examples/02_shared_grammar/tests/models/types_with_error.type:1:1: error: types must be lowercase
-	validating types.type
-	validating types_with_error.type
-	  WARNING/ERROR: types_with_error.type:1:1: error: types must be lowercase
+	...tests/models/types.etype2: OK.
+	...tests/models/types_with_error.etype2:1:1: error: types must be lowercase
+	...tests/models/data_structures.edata2: OK.
+	./types_with_error.etype2:1:1: error: types must be lowercase
+	./data_flow_with_error.eflow2:5:1: error: algo data types must match
+	...tests/models/data_flow.eflow2: OK.
+	...tests/models/types_with_error.etype2:1:1: error: types must be lowercase
 
 #### json_ref_dsl
 
+	cd 03_non_textx_models
+	virtualenv venv -p $(which python3)
+	source ./venv/bin/activate
+	pip install -r requirements_dev.txt
+	pip install -e .
+
 We can validate if all references to a json file from a textX model are ok:
 
-	cd 03_non_textx_models/tests/models
-	json_ref_dsl_validate ok.jref 
+	cd tests/models
+	textx check ok.jref3 
 
-Expected output:
+Expected output: no error ("OK")
 
-	validating ok.jref
-	A1 --> pierre: ok
-	A2 --> male: ok
+	textx check error_noname.jref3
+
+Expected output: error, "'noname' not found".

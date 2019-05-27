@@ -15,9 +15,13 @@ setup(name='types_data_flow_dsls',
       ],
       keywords="parser meta-language meta-model language DSL",
       entry_points={
-          'console_scripts': [
-              'types_data_flow_dsls_validate=\
-                       types_data_flow_dsls.console:validate',
+        'textx_languages': [
+            'flow_dsl_s = types_data_flow_dsls:flow_dsl_s',
+            'data_dsl_s = types_data_flow_dsls:data_dsl_s',
+            'types_dsl_s = types_data_flow_dsls:types_dsl_s',
+          ],
+        'textx_generators': [
+              'flow_dsl_s_plantuml=types_data_flow_dsls.generators:flow_pu',
           ]
       },
       )
